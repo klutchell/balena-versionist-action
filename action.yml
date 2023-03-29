@@ -106,7 +106,7 @@ runs:
           echo "error=${error}" >> $GITHUB_OUTPUT
         fi
 
-        if git status --porcelain --untracked-files=no
+        if [ -n "$(git status --porcelain --untracked-files=no)" ]
         then
           echo "changed=true" >> $GITHUB_OUTPUT
         else
