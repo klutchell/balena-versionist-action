@@ -74,7 +74,7 @@ runs:
     - name: Setup yq 3.x
       uses: alexellis/arkade-get@a7fbca59ab9fb4364b1b491b6d379e5f4c350eee
       with:
-        yq: "3.4.1"
+        yq: "3.0.1"
 
     - name: Generate changelog
       shell: bash
@@ -106,7 +106,7 @@ runs:
           echo "error=${error}" >> $GITHUB_OUTPUT
         fi
 
-        if git status --porcelain --untracked-files=no
+        if [ -n "$(git status --porcelain --untracked-files=no)" ]
         then
           echo "changed=true" >> $GITHUB_OUTPUT
         else
