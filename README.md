@@ -46,6 +46,7 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v3
         with:
+          token: ${{ secrets.ACCESS_TOKEN }}
           fetch-depth: 0 # versionist needs all commits and tags
 
       - name: Run balena-versionist
