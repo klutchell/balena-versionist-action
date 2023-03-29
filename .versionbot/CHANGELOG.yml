@@ -1,4 +1,17 @@
 - commits:
+    - subject: Fix changed files check
+      hash: 3228c3b0c16f99b026503f4feec4bc30ca68897b
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 0.0.3
+  title: ""
+  date: 2023-03-29T20:09:52.725Z
+- commits:
     - subject: Do not use automatic tokens for pushes to main
       hash: 60388290892f21447bfe7e7ec35ec87e516f54cd
       body: ""
