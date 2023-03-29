@@ -1,6 +1,6 @@
 # balena versionist GitHub action
 
-Automatic versioning of source files with [balena-versionist](https://github.com/balena-io/balena-versionist).
+Automatic versioning of source files with [balena-versionist](https://github.com/product-os/balena-versionist).
 
 Useful as a first step in continuous deployment workflows.
 
@@ -14,8 +14,8 @@ The following actions are taken sequentially:
 
 Read more about the opinionated versioning here:
 
-- [versionist](https://github.com/balena-io/versionist)
-- [balena-versionist](https://github.com/balena-io/balena-versionist)
+- [versionist](https://github.com/product-os/versionist)
+- [balena-versionist](https://github.com/product-os/balena-versionist)
 
 ## Getting Started
 
@@ -28,7 +28,7 @@ on:
     branches: ["master", "main"]
 
 jobs:
-  versioned_source:
+  versionist:
     name: Run versionist
     runs-on: ubuntu-latest
 
@@ -109,8 +109,8 @@ Generated version.
 
 Read more about the opinionated versioning here:
 
-- [versionist](https://github.com/balena-io/versionist)
-- [balena-versionist](https://github.com/balena-io/balena-versionist)
+- [versionist](https://github.com/product-os/versionist)
+- [balena-versionist](https://github.com/product-os/balena-versionist)
 
 #### `tag`
 
@@ -119,11 +119,6 @@ Generated tag. Same as version but with a `v` prefix.
 #### `artifact`
 
 Name of the uploaded versioned source artifact.
-
-## Help
-
-If you're having trouble getting the project running,
-submit an issue or post on the forums at <https://forums.balena.io>.
 
 ## Contributing
 
