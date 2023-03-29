@@ -13,12 +13,7 @@ concurrency:
 jobs:
   versionist:
     name: Run versionist
-    runs-on: ubuntu-latest
-
-    outputs:
-      version: ${{ steps.versionist.outputs.version }}
-      tag: ${{ steps.versionist.outputs.tag }}
-      artifact: ${{ steps.versionist.outputs.artifact }}
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout project
@@ -34,24 +29,3 @@ jobs:
           github_token: ${{ secrets.ACCESS_TOKEN }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PRIVATE_KEY }}
-
-  run_tests:
-    name: Run tests
-    needs: versionist
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download versioned source
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ needs.versionist.outputs.artifact }}
-          path: ${{ runner.temp }}
-
-      - name: Extract versioned source
-        shell: pwsh
-        run: tar -xvf ${{ runner.temp }}/source.tgz
-
-      - name: Echo version and tag
-        run: |
-          echo "Version is ${{ needs.versionist.outputs.version }}"
-          echo "Tag is ${{ needs.versionist.outputs.tag }}"
