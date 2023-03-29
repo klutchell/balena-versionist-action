@@ -1,4 +1,4 @@
-name: "balena versionist"
+name: Versionist
 description: "Automatic versioning of source files with balena-versionist"
 
 inputs:
@@ -10,7 +10,7 @@ inputs:
     required: true
   gpg_passphrase:
     description: "Passphrase to decrypt GPG private key"
-    required: true
+    required: false
   balena_versionist_version:
     description: "Use a specific release of balena-versionist"
     required: false
@@ -49,10 +49,8 @@ runs:
       with:
         node-version: 16.x
 
-    - name: Setup yq 3.x
-      uses: alexellis/arkade-get@a7fbca59ab9fb4364b1b491b6d379e5f4c350eee
-      with:
-        yq: "3.0.1"
+    - name: Setup arkade
+      uses: alexellis/setup-arkade@v2
 
     - name: Install balena-versionist and versionist
       shell: bash
@@ -60,6 +58,11 @@ runs:
         npm install -g \
           balena-versionist@${{ inputs.balena_versionist_version }} \
           versionist@${{ inputs.versionist_version }}
+
+    - name: Setup yq 3.x
+      uses: alexellis/arkade-get@a7fbca59ab9fb4364b1b491b6d379e5f4c350eee
+      with:
+        yq: "3.4.1"
 
     - name: Generate changelog
       shell: bash
@@ -70,6 +73,11 @@ runs:
         then
           $(npm root -g)/versionist/scripts/generate-changelog.sh .
         fi
+
+    - name: Setup yq 4.x
+      uses: alexellis/arkade-get@a7fbca59ab9fb4364b1b491b6d379e5f4c350eee
+      with:
+        yq: "v4.32.2"
 
     # run balena-versionist
     # print the error if anything fails
@@ -103,7 +111,7 @@ runs:
 
         echo "version=${version}" >> $GITHUB_OUTPUT
         echo "tag=v${version}" >> $GITHUB_OUTPUT
-        echo "artfiact=source-${{ github.event.pull_request.head.sha || github.event.head_commit.id }}" >> $GITHUB_OUTPUT
+        echo "artifact=source-${{ github.event.pull_request.head.sha || github.event.head_commit.id }}" >> $GITHUB_OUTPUT
 
     # create a versioned commit
     - name: Create versioned commit
@@ -147,7 +155,6 @@ runs:
       run: tar -acvf ${{ runner.temp }}/source.tgz .
 
     - name: Upload artifact
-      shell: bash
       uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3
       with:
         name: ${{ steps.versionist.outputs.artifact }}

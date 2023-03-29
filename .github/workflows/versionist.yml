@@ -1,0 +1,51 @@
+name: Versionist
+on:
+  push:
+    branches: ["master", "main"]
+  pull_request:
+    branches: ["master", "main"]
+
+jobs:
+  versionist:
+    name: Run versionist
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.versionist.outputs.version }}
+      tag: ${{ steps.versionist.outputs.tag }}
+      artifact: ${{ steps.versionist.outputs.artifact }}
+
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # versionist needs all commits and tags
+
+      - name: Run versionist
+        id: versionist
+        uses: ./ # Use local action
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg_passphrase: ${{ secrets.GPG_PRIVATE_KEY }}
+
+  run_tests:
+    name: Run tests
+    needs: versionist
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download versioned source
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ needs.versionist.outputs.artifact }}
+          path: ${{ runner.temp }}
+
+      - name: Extract versioned source
+        shell: pwsh
+        run: tar -xvf ${{ runner.temp }}/source.tgz
+
+      - name: Echo version and tag
+        run: |
+          echo "Version is ${{ needs.versionist.outputs.version }}"
+          echo "Tag is ${{ needs.versionist.outputs.tag }}"
