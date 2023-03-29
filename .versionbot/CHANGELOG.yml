@@ -1,0 +1,40 @@
+- commits:
+    - subject: Do not use automatic tokens for pushes to main
+      hash: 60388290892f21447bfe7e7ec35ec87e516f54cd
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+    - subject: Support push events on default branch
+      hash: 7cac99c87e58228e933769cdd1d4799d7293a257
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+    - subject: Fix conditions for push
+      hash: a385d57272ef8713b36adcd56ecd6dac979e5437
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+    - subject: Add versionist workflow
+      hash: 787a47bdcb5eeba11d86e11029f14202a13922ee
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 0.0.2
+  title: ""
+  date: 2023-03-29T19:46:59.544Z
