@@ -120,6 +120,14 @@ Generated tag. Same as version but with a `v` prefix.
 
 Name of the uploaded versioned source artifact.
 
+#### `changed`
+
+Either `true` or `false` depending on whether any source files were updated by versionist.
+
+#### `error`
+
+Error message from versionist, if any.
+
 ## Contributing
 
 Please open an issue or submit a pull request with any features, fixes, or changes.

@@ -17,11 +17,11 @@ jobs:
 
     steps:
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # versionist needs all commits and tags
 
-      - name: Run versionist
+      - name: Run balena-versionist
         id: versionist
         uses: ./ # Use local action
         with:
