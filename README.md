@@ -20,12 +20,17 @@ Read more about the opinionated versioning here:
 ## Getting Started
 
 ```yaml
-name: Run balena versionist
+name: Versionist
 on:
   push:
     branches: ["master", "main"]
   pull_request:
     branches: ["master", "main"]
+
+# https://docs.github.com/en/actions/using-jobs/using-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   versionist:
@@ -39,20 +44,20 @@ jobs:
 
     steps:
       - name: Checkout project
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # versionist needs all commits and tags
 
-      - name: Run versionist
+      - name: Run balena-versionist
         id: versionist
-        uses: klutchell/balena-versionist-action@master
+        uses: klutchell/balena-versionist-action
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.ACCESS_TOKEN }}
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg_passphrase: ${{ secrets.GPG_PRIVATE_KEY }}
 
   run_tests:
-    name: A job that uses versionist outputs
+    name: Run tests
     needs: versionist
     runs-on: ubuntu-latest
 
