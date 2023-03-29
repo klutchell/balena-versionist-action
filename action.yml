@@ -30,6 +30,12 @@ outputs:
   artifact:
     description: "Name of the uploaded versioned source artifact"
     value: ${{ steps.versionist.outputs.artifact }}
+  changed:
+    description: "Whether the source files were changed"
+    value: ${{ steps.versionist.outputs.changed }}
+  error:
+    description: "Error message from versionist, if any"
+    value: ${{ steps.versionist.outputs.error }}
 
 runs:
   using: "composite"
@@ -85,9 +91,6 @@ runs:
       with:
         yq: "v4.32.2"
 
-    # run balena-versionist
-    # print the error if anything fails
-    # FIXME: fail the workflow if the error is anything other than "No such file or directory"
     - name: Run versionist
       shell: bash
       id: versionist
@@ -97,19 +100,18 @@ runs:
         out="$(balena-versionist 2>&1)"
         error="$(awk '/Error:/{getline; print}' <<< "${out}")"
 
-        case ${error} in
-          "") # no error
-            ;;
-          'No such file or directory'*)
-            echo "::error::${error}"
-            ;;
-          *)
-            echo "::error::${error}"
-            exit 1
-            ;;
-        esac
+        if [ -n "${error}" ]
+        then
+          echo "::error::${error}"
+          echo "error=${error}" >> $GITHUB_OUTPUT
+        fi
 
-        git status --porcelain
+        if git status --porcelain --untracked-files=no
+        then
+          echo "changed=true" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
 
         versions=()
         [ -f .versionbot/CHANGELOG.yml ] && versions+=($(yq e '.[0].version' .versionbot/CHANGELOG.yml))
@@ -119,9 +121,12 @@ runs:
         echo "tag=v${version}" >> $GITHUB_OUTPUT
         echo "artifact=source-${{ github.event.pull_request.head.sha || github.event.head_commit.id }}" >> $GITHUB_OUTPUT
 
-    # create a versioned commit
+    # if nothing has changed, avoid commit and push
+    # this *should* interrupt actions loops when a versioned commit in the main branch triggers a another run
+    # by this point there should be no further changes because the versioned commit does not have a change-type
     - name: Create versioned commit
       shell: bash
+      if: steps.versionist.outputs.changed == 'true'
       env:
         GIT_AUTHOR_NAME: ${{ steps.import-gpg.outputs.name }}
         GIT_AUTHOR_EMAIL: ${{ steps.import-gpg.outputs.email }}
@@ -135,18 +140,19 @@ runs:
         git show -1
         git log -n 2
 
-    # push the versioned commit only if the PR is merged
     - name: Push versioned commit
       shell: bash
       if: |
+        steps.versionist.outputs.changed == 'true' &&
         (
-          github.event_name == 'push'
-        ) || (
-          github.event_name == 'pull_request' &&
-          github.event.action == 'closed' &&
-          github.event.pull_request.merged == true
+          (
+            github.event_name == 'push'
+          ) || (
+            github.event_name == 'pull_request' &&
+            github.event.action == 'closed' &&
+            github.event.pull_request.merged == true
+          )
         )
-      continue-on-error: true
       run: |
         git push origin HEAD:refs/heads/${{ github.base_ref || github.ref_name }}
         # We push the tag separately so that it is only pushed if the commit push succeed, this avoids
