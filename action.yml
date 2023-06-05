@@ -14,11 +14,11 @@ inputs:
   balena_versionist_version:
     description: "Use a specific release of balena-versionist"
     required: false
-    default: "latest"
+    default: "0.14.13"
   versionist_version:
     description: "Use a specific release of versionist"
     required: false
-    default: "latest"
+    default: "7.0.1"
 
 outputs:
   version:
