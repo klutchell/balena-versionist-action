@@ -1,4 +1,17 @@
 - commits:
+    - subject: Pin versionist and balena-versionist releases
+      hash: cc68002c009de97e381ebf4e6f6e0044af765307
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 0.0.5
+  title: ""
+  date: 2023-06-05T14:52:39.939Z
+- commits:
     - subject: Remove custom versions of yq
       hash: 7777accb36953bee93735423e77bd14a9cbc4e11
       body: |
