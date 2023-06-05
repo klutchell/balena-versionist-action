@@ -71,11 +71,6 @@ runs:
           balena-versionist@${{ inputs.balena_versionist_version }} \
           versionist@${{ inputs.versionist_version }}
 
-    - name: Setup yq 3.x
-      uses: alexellis/arkade-get@a7fbca59ab9fb4364b1b491b6d379e5f4c350eee
-      with:
-        yq: "3.0.1"
-
     - name: Generate changelog
       shell: bash
       env:
@@ -85,11 +80,6 @@ runs:
         then
           $(npm root -g)/versionist/scripts/generate-changelog.sh .
         fi
-
-    - name: Setup yq 4.x
-      uses: alexellis/arkade-get@a7fbca59ab9fb4364b1b491b6d379e5f4c350eee
-      with:
-        yq: "v4.32.2"
 
     - name: Run versionist
       shell: bash
