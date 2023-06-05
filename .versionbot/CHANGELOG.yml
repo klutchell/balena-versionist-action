@@ -1,4 +1,18 @@
 - commits:
+    - subject: Remove custom versions of yq
+      hash: 7777accb36953bee93735423e77bd14a9cbc4e11
+      body: |
+        The latest changelog script will work with v4.
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 0.0.4
+  title: ""
+  date: 2023-06-05T14:47:20.913Z
+- commits:
     - subject: Fix changed files check
       hash: 3228c3b0c16f99b026503f4feec4bc30ca68897b
       body: ""
