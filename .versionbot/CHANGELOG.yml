@@ -1,4 +1,17 @@
 - commits:
+    - subject: Use loose versioning for versionist and balena-versionist by default
+      hash: 753ac079132de5e0909f32601148a447de53277c
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 0.0.6
+  title: ""
+  date: 2023-06-28T15:17:58.204Z
+- commits:
     - subject: Pin versionist and balena-versionist releases
       hash: cc68002c009de97e381ebf4e6f6e0044af765307
       body: ""
