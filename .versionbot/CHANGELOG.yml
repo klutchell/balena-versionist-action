@@ -1,4 +1,17 @@
 - commits:
+    - subject: Include untracked files in versioned commit
+      hash: 0a4a6ffafb680e967590860837061a07443bead7
+      body: ""
+      footer:
+        Change-type: patch
+        change-type: patch
+        Signed-off-by: Kyle Harding <kyle@balena.io>
+        signed-off-by: Kyle Harding <kyle@balena.io>
+      author: Kyle Harding
+  version: 0.0.7
+  title: ""
+  date: 2023-06-28T16:38:26.418Z
+- commits:
     - subject: Use loose versioning for versionist and balena-versionist by default
       hash: 753ac079132de5e0909f32601148a447de53277c
       body: ""
